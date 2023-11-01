@@ -36,13 +36,13 @@ adicionarContato(contato) {
     this.contatos.forEach((contato, index) => {
       if (contato.constructor.name === 'Contato') {
           return console.log(`${index + 1}. Nome: ${contato.nome}, Telefone: ${contato.telefone}, Email: ${contato.email}\n`);
-        
+
       } else if (contato.constructor.name === 'Cliente') {
           return console.log(`${index + 1}. Nome: ${contato.nome}, Telefone: ${contato.telefone}, Email: ${contato.email},empresa: ${contato.empresa} \n`);
-        
+
       } else if (contato.constructor.name === 'Amigo') {
           return console.log(`${index + 1}. Nome: ${contato.nome}, Telefone: ${contato.telefone}, Email: ${contato.email}, aniversario: ${contato.aniversario} \n`);
-        
+
       } else if (contato.constructor.name === 'Colega_de_trabalho') {
           return console.log(`${index + 1}. Nome: ${contato.nome}, Telefone: ${contato.telefone}, Email: ${contato.email}, departamento: ${contato.departamento}\n`);
       }
@@ -116,7 +116,7 @@ while (true) {
         var nome = prompt('Nome:');
           var telefone = prompt('Telefone:');
           var email = prompt('Email:');
-          var aniversario = prompt('Digite a data de aniversário: ')
+          var aniversario = prompt('Digite a data de aniversário: ');
           minhaAgenda.adicionarContato(new Amigo(nome, telefone, email, aniversario));
           break;
         }
@@ -128,7 +128,7 @@ while (true) {
             minhaAgenda.adicionarContato(new Colega_de_trabalho(nome, telefone, email, departamento));
             break;
           }
-  
+
     case 2:
       minhaAgenda.visualizarContatos();
       break;
@@ -137,7 +137,21 @@ while (true) {
       var novoNome = prompt('Novo Nome:');
       var novoTelefone = prompt('Novo Telefone:');
       var novoEmail = prompt('Novo Email:');
-      minhaAgenda.editarContato(numeroEditar, new Contato(novoNome, novoTelefone, novoEmail));
+      if (minhaAgenda.contatos[numeroEditar].constructor.name === 'Cliente') {
+        var propriedadeHeranca = prompt("Nova Empresa:");
+        minhaAgenda.editarContato(numeroEditar, new Cliente(novoNome, novoTelefone, novoEmail, propriedadeHeranca));
+      }
+      else if (minhaAgenda.contatos[numeroEditar].constructor.name === 'Amigo') {
+        var propriedadeHeranca = prompt("Nova Data de Nascimento:");
+        minhaAgenda.editarContato(numeroEditar, new Amigo(novoNome, novoTelefone, novoEmail, propriedadeHeranca));
+      }
+      else if (minhaAgenda.contatos[numeroEditar].constructor.name === 'Colega_de_trabalho') {
+        var propriedadeHeranca = prompt("Novo Departamento:");
+        minhaAgenda.editarContato(numeroEditar, new Colega_de_trabalho(novoNome, novoTelefone, novoEmail, propriedadeHeranca));
+      }
+      else {
+        minhaAgenda.editarContato(numeroEditar, new Contato(novoNome, novoTelefone, novoEmail));
+      }
       break;
     case 4:
       var numeroExcluir = parseInt(prompt('Número do Contato a ser Excluído:')) - 1;
